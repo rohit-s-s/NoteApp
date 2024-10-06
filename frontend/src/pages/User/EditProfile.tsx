@@ -1,18 +1,16 @@
+import { useQueryClient } from "@tanstack/react-query"
 import AuthForm from "../../components/AuthForm"
-import { useGetUser } from "../../hooks/useUser"
+import { userData } from "../../types/util"
 
 const EditProfile = () => {
-    const {data,isSuccess,isLoading} = useGetUser()
-    if(isLoading) <div>Loading....</div>
-    if(isSuccess){
-        console.log(data)
-        return (
+    const queryClinet = useQueryClient()
+    const data:userData = queryClinet.getQueryData(['user']) as userData
+    return (
             <>
                 <AuthForm logic="Edit" userData={data}/>
             </>
           )
     }
  
-}
 
 export default EditProfile
