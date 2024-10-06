@@ -1,17 +1,19 @@
-import { useMutation,useQueryClient } from "@tanstack/react-query";
+import { useMutation,useQuery,useQueryClient } from "@tanstack/react-query";
 import axios from "axios";
 import useAuth from "./useAuth";
 import { useLocation, useNavigate } from "react-router-dom";
 
+//Hook for updating user data
 export const useUpdate = () => {
+  const navigate = useNavigate()
   const { auth } = useAuth();
   const token = auth.token;
   const queryClinet = useQueryClient();
   return useMutation({
-    mutationFn: async (data: { role: string; id: string }) => {
+    mutationFn: async ({data, id}: { data:{username:string,password?:string },id:string}) => {
       const response = await axios.put(
-        "http://localhost:3000/auth/update",
-        data,
+        "http://localhost:3000/auth/edit",
+        {...data,id},
         {
           headers: { Authorization: `Bearer ${token}` },
           withCredentials: true,
@@ -21,10 +23,12 @@ export const useUpdate = () => {
     },
     onSuccess: () => {
       queryClinet.invalidateQueries({ queryKey: ["user"] });
+      navigate('/')
     },
   });
 };
 
+//hook for deleting user data
 export const useDelete = () => {
   const { auth } = useAuth();
   const token = auth.token;
@@ -44,6 +48,7 @@ export const useDelete = () => {
   });
 };
 
+//hook for Registering new user
 export const useRegister = ()=>{
   const navigate = useNavigate()
   return useMutation({
@@ -58,6 +63,7 @@ export const useRegister = ()=>{
   })
 }
 
+//Hook for logging in user
 export const useLogin = ()=>{
   const { setAuth } = useAuth();
   const navigate = useNavigate();
@@ -79,6 +85,7 @@ export const useLogin = ()=>{
   });
 }
 
+//hook for user logout
 export const useLogout = () => {
   const { setAuth } = useAuth();
   const logout = async () => {
@@ -95,3 +102,20 @@ export const useLogout = () => {
 
   return logout;
 };
+
+export const useGetUser = ()=>{
+  const {auth} = useAuth()
+  const token = auth.token
+  return useQuery({
+      queryKey:['note'],
+      queryFn: async()=>{
+          const response = await axios('http://localhost:3000/auth/getuser',{
+              headers: { Authorization: `Bearer ${token}` },
+              withCredentials:true
+          })
+          console.log(response.data)
+          return response.data
+      },
+      refetchOnWindowFocus:false
+  })
+}

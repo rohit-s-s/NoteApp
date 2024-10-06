@@ -13,6 +13,7 @@ import EditNotes from "./pages/Notes/EditNotes";
 import Dasboard from "./pages/Dasboard";
 import AuthLayout from "./layout/AuthLayout";
 import ProtectedRoute from "./components/ProtectedRoute";
+import EditProfile from "./pages/EditProfile";
 
 function App() {
   const router = createBrowserRouter(
@@ -29,6 +30,7 @@ function App() {
           <Route element={<AuthLayout/>}>
             <Route path="addnotes" element={<AddNotes />} />
             <Route path="editnotes/:id" element={<EditNotes />} />
+            <Route path="edituser" element={<EditProfile/>}/>
           </Route>
             <Route path="/" element={<Dasboard/>}/>
         </Route>

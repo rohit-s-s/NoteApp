@@ -77,7 +77,7 @@ exports.handleUserSignIn = asyncHandler(async (req, res) => {
 exports.handleUserEdit = asyncHandler(async (req, res) => {
   const { id,username,password } = req.body;
 
-  if (!username || !password || !role) {
+  if (!username || !password|| !id) {
     return res.status(400).json({
       message: "Provide required feilds",
     });
@@ -122,13 +122,15 @@ exports.handleUserDelete = asyncHandler(async (req, res) => {
 });
 
 // //Getting specific user details 
-// exports.handleGetUserById = asyncHandler(async (req, res) => {
-//   const {id} = req.user
-//   const user = await User.findById(id)
-//   //Before returning user value remember to unhash passwird
-//   return res.status(200).json(user);
-// });
+exports.handleGetUserById = asyncHandler(async (req, res) => {
+  const {id} = req.user
+  const user = await User.findById(id)
+  //Before returning user value remember to unhash passwird
+  return res.status(200).json(user);
+});
 
+
+//handling refresh tokens
 exports.handleRefreshToken = asyncHandler(async (req, res) => {
   const token = req.cookies?.jwt;
   if (!token) return res.status(401).json({ message: "Token not found" });
@@ -150,6 +152,7 @@ exports.handleRefreshToken = asyncHandler(async (req, res) => {
   );
 });
 
+//logging out user
 exports.handleUserLogout = asyncHandler(async (req, res) => {
   const cookie = req.cookies;
   if (!cookie?.jwt) return res.status(204).json({ message: "No cookie found" });
