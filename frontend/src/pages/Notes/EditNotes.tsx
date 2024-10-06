@@ -10,7 +10,7 @@ const EditNotes = () => {
   if(isError) return <div className="text-red-800">{error.message}</div>
   if (isSuccess) {
     return(
-        <NoteForm noteData={noteData}/>
+        <NoteForm logic="Edit" noteData={noteData}/>
     )
 
   }

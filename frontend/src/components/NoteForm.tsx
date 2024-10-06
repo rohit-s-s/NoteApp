@@ -1,5 +1,5 @@
 import { FormProvider, SubmitHandler, useForm } from "react-hook-form";
-import { useUpdate } from "../hooks/useNotes";
+import { useFetch, useUpdate } from "../hooks/useNotes";
 import Input from "./Input";
 import SubmitButton from "./SubmitButton";
 
@@ -7,12 +7,11 @@ type FieldValues = {
   title: string;
   text: string;
 };
-type NoteData = {
-    noteData:{title:string,text:string,_id:string}
-}
 
-const NoteForm = ({noteData}:NoteData) => {
-    const { mutate: UpdateFn,isError,error} = useUpdate();
+
+const NoteForm = ({logic,noteData}:{logic:string,noteData?:{title:string,text:string,_id:string}}) => {
+    const { mutate: UpdateFn} = useUpdate();
+    const {mutate:Addfn} = useFetch()
     const method = useForm<FieldValues>({
         defaultValues: {
             title: noteData?.title,
@@ -20,7 +19,11 @@ const NoteForm = ({noteData}:NoteData) => {
         }
       });
       const {handleSubmit } = method;
-      const onSubmit: SubmitHandler<FieldValues> = (data) =>UpdateFn({ data: data, id: noteData?._id });
+      const onSubmit: SubmitHandler<FieldValues> = (data) =>{
+        if(logic==='Edit'){ UpdateFn({ data: data, id: noteData?._id as string });}
+        else{Addfn(data)}
+       
+      }
         return (
           <>
           <FormProvider {...method}>
@@ -29,10 +32,10 @@ const NoteForm = ({noteData}:NoteData) => {
                 <br />
                 <Input label="Enter note content" type="textarea" name="text"/>
                 <br />
-                <SubmitButton logic="Edit"/>
+                <SubmitButton logic={logic}/>
               </form>
             </FormProvider>
-             {isError && <div className="text-red-700">{error.message}</div>}
+             {/* {isError && <div className="text-red-700">{error.message}</div>} */}
           </>
           );
 }
