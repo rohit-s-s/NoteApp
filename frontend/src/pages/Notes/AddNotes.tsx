@@ -21,7 +21,7 @@ const AddNotes = () => {
         <form onSubmit={handleSubmit(onSubmit)} className="relative">
         <Input label="Enter title" name="title" type="text"/>
         <br/>
-        <Input label="Enter note content" name="text" type="text"/>
+        <Input label="Enter note content" name="text" type="textarea"/>
         <br/>
         <SubmitButton logic="Add"/>
         <div className="absolute h-14 w-14 -left-4 -top-6"><Link to={'/'}><IoIosCloseCircle className="text-base"/></Link></div>

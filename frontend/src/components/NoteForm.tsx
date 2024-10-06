@@ -29,7 +29,7 @@ const NoteForm = ({noteData}:NoteData) => {
               <form onSubmit={handleSubmit(onSubmit)} noValidate className="relative">
                 <Input label="Enter note Title" type="text" name="title"/>
                 <br />
-                <Input label="Enter note content" type="text" name="text"/>
+                <Input label="Enter note content" type="textarea" name="text"/>
                 <br />
                 <SubmitButton logic="Edit"/>
                 <div className="absolute h-14 w-14 -left-4 -top-6"><Link to={'/'}><IoIosCloseCircle className="text-base"/></Link></div>
