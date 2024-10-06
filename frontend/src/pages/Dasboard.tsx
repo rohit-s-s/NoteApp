@@ -21,7 +21,7 @@ const Dasboard = () => {
     if (isSuccess) {
         return (
         <>
-        <div className="flex flex-col justify-between" style={{height:"100vh"}}>
+        <div className="flex flex-col justify-between min-h-screen ">
             <header className="border-b">
                 <div className='flex justify-between items-center p-4'>
                     <h1 className='font-bold text-xl'>Note App</h1>
@@ -46,8 +46,8 @@ const Dasboard = () => {
                 </div>
                 <div className="bottom-0 right-0 h-16 w-16 fixed"><Link to={'addnotes'}><IoMdAddCircle className="text-3xl"/></Link></div>
             </main>
-            <footer>
-                <p className="p-4">Copyright 2022</p>
+            <footer className="p-4">
+                <p>Copyright 2022</p>
             </footer>  
         </div>
         

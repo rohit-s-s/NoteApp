@@ -108,8 +108,7 @@ exports.handleUserEdit = asyncHandler(async (req, res) => {
 
 //deleteing the user
 exports.handleUserDelete = asyncHandler(async (req, res) => {
-  const { id } = req.body;
-  const user = await User.findByIdAndDelete(id);
+  const user = await User.findByIdAndDelete(req.user._id);
   if (!user) {
     return res.status(404).json({
       message: "User not found",
