@@ -1,6 +1,6 @@
 const express = require("express")
 const router = express.Router()
-const { handleCreateNote, handleUpdateNotes, handleDeleteNote, handleShowNotes, handleGetNotes, handleGetNotesById } = require("../controller/notes")
+const { handleCreateNote, handleUpdateNotes, handleDeleteNote, handleGetNotes, handleGetNotesById } = require("../controller/notes")
 const auth = require('../middleware/auth') 
 
 router.post("/create",handleCreateNote)//route for creating new notes

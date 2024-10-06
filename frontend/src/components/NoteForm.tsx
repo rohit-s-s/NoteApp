@@ -1,5 +1,5 @@
 import { FormProvider, SubmitHandler, useForm } from "react-hook-form";
-import { useFetch, useUpdate } from "../hooks/useNotes";
+import { useAddNote, useEditNote } from "../hooks/useNotes";
 import Input from "./Input";
 import SubmitButton from "./SubmitButton";
 
@@ -10,8 +10,8 @@ type FieldValues = {
 
 
 const NoteForm = ({logic,noteData}:{logic:string,noteData?:{title:string,text:string,_id:string}}) => {
-    const { mutate: UpdateFn} = useUpdate();
-    const {mutate:Addfn} = useFetch()
+    const { mutate: UpdateFn} = useEditNote();
+    const {mutate:Addfn} = useAddNote()
     const method = useForm<FieldValues>({
         defaultValues: {
             title: noteData?.title,

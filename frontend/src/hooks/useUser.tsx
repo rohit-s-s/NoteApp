@@ -31,19 +31,21 @@ export const useUpdate = () => {
 //hook for deleting user data
 export const useDelete = () => {
   const { auth } = useAuth();
+  const {setAuth} = useAuth()
   const token = auth.token;
   const queryClinet = useQueryClient();
   return useMutation({
-    mutationFn: async (data: string) => {
+    mutationFn: async () => {
       const response = await axios.delete("http://localhost:3000/auth/delete", {
         headers: { Authorization: `Bearer ${token}` },
         withCredentials: true,
-        data: { id: data },
       });
       return response.data;
     },
     onSuccess: () => {
       queryClinet.invalidateQueries({ queryKey: ["user"] });
+      console.log('User deleted')
+      setAuth({})
     },
   });
 };
@@ -103,6 +105,7 @@ export const useLogout = () => {
   return logout;
 };
 
+//get specific user data
 export const useGetUser = ()=>{
   const {auth} = useAuth()
   const token = auth.token

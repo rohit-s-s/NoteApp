@@ -1,5 +1,5 @@
 import { NavLink} from "react-router-dom";
-import AuthForm from "../components/AuthForm";
+import AuthForm from "../../components/AuthForm";
 
 const Register = () => {
   

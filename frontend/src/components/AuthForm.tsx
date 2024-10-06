@@ -1,6 +1,6 @@
 import { FormProvider, SubmitHandler, useForm } from "react-hook-form";
 import Input from "./Input";
-import { useLogin, useRegister, useUpdate } from "../hooks/useUpdate";
+import { useLogin, useRegister, useUpdate } from "../hooks/useUser";
 import SubmitButton from "./SubmitButton";
 
 type FormValues = {

@@ -10,7 +10,7 @@ const Input = ({label,type,name}:{label:string,type:'text'|'textarea'|'password'
           <br />
          {
           type === 'textarea'?(
-            <textarea className="outline-none px-2 py-1 rounded-md border border-gray-500 w-60" id={name} rows={10} {...register(name,{required:true})}/>
+            <textarea className="outline-none text-sm px-2 py-1 rounded-md border border-gray-500 w-60" id={name} rows={4} {...register(name,{required:true})}/>
          
           ):(
             <input

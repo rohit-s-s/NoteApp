@@ -3,7 +3,7 @@ import axios from "axios";
 import { useNavigate } from "react-router-dom";
 import useAuth from "./useAuth";
 
-
+//code to get all notes
 export const useGetNotes = ()=>{
     const {auth} = useAuth()
     const token = auth.token
@@ -21,10 +21,11 @@ export const useGetNotes = ()=>{
     })
 }
 
-export const useFetch= () => {
+//code to create new note
+export const useAddNote = () => {
     const navigate = useNavigate()
     const {auth} = useAuth()
-  const token = auth.token
+    const token = auth.token
     const queryClinet = useQueryClient()
   return useMutation({
     mutationFn: async (data: { title: string; text: string }) => {
@@ -45,7 +46,8 @@ export const useFetch= () => {
   });
 };
 
-export const useUpdate = () => {
+//code to edit note
+export const useEditNote = () => {
   type Data = {
     data: { title: string; text: string };
     id: string;
@@ -77,7 +79,8 @@ export const useUpdate = () => {
   });
 };
 
-export const useDelete = () => {
+//code to delete note
+export const useDeleteNote = () => {
     const queryClinet = useQueryClient()
     const {auth} = useAuth()
   const token = auth.token
@@ -100,7 +103,9 @@ export const useDelete = () => {
     
   });
 };
-export const useShowById = (id:string)=>{
+
+//code to get note by id
+export const useGetNoteById = (id?:string)=>{
     const {auth} = useAuth()
     const token = auth.token
     return useQuery({

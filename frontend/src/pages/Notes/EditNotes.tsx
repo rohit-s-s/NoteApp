@@ -1,10 +1,10 @@
-import { useShowById} from "../../hooks/useNotes";
+import { useGetNoteById} from "../../hooks/useNotes";
 import { useParams } from "react-router-dom";
 import NoteForm from "../../components/NoteForm";
 
 const EditNotes = () => {
   const { id } = useParams();
-  const { data: noteData, isSuccess, isLoading,isError,error } = useShowById(id as string);
+  const { data: noteData, isSuccess, isLoading,isError,error } = useGetNoteById(id as string);
   
   if (isLoading) return <div>Loading...</div>;
   if(isError) return <div className="text-red-800">{error.message}</div>

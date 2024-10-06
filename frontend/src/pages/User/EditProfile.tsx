@@ -1,5 +1,5 @@
-import AuthForm from "../components/AuthForm"
-import { useGetUser } from "../hooks/useUpdate"
+import AuthForm from "../../components/AuthForm"
+import { useGetUser } from "../../hooks/useUser"
 
 const EditProfile = () => {
     const {data,isSuccess,isLoading} = useGetUser()
