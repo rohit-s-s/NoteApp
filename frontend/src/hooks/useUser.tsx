@@ -13,7 +13,7 @@ export const useUpdate = () => {
   return useMutation({
     mutationFn: async (data:userData) => {
       const response = await axios.put(
-        "http://localhost:3000/auth/edit",
+        "http://localhost:3000/api/user/edit",
         {...data},
         {
           headers: { Authorization: `Bearer ${token}` },
@@ -37,7 +37,7 @@ export const useDeleteUser = () => {
   return useMutation({
     mutationFn: async (id:string) => {
       console.log(id)
-      const response = await axios.delete("http://localhost:3000/auth/delete", {
+      const response = await axios.delete("http://localhost:3000/api/user/delete", {
         headers: { Authorization: `Bearer ${token}` },
         withCredentials: true,
       });
@@ -56,7 +56,7 @@ export const useRegister = ()=>{
   const navigate = useNavigate()
   return useMutation({
     mutationFn: async (data:userData) => {
-      await axios.post('http://localhost:3000/auth/register', data)
+      await axios.post('http://localhost:3000/api/user/signup', data)
     },
     onSuccess:()=>{
       alert("User registered")
@@ -72,7 +72,7 @@ export const useLogin = ()=>{
   return useMutation({
     mutationFn: async (data:userData) => {
       const response = await axios.post(
-        "http://localhost:3000/auth/login",
+        "http://localhost:3000/api/user/login",
         data,{withCredentials:true}
       );
       return response.data;
@@ -90,7 +90,7 @@ export const useLogout = () => {
   const logout = async () => {
     setAuth({});
     try {
-      const respose = await axios("http://localhost:3000/auth/logout", {
+      const respose = await axios("http://localhost:3000/api/user/logout", {
         withCredentials: true,
       });
       return respose.data;
@@ -109,7 +109,7 @@ export const useGetUser = ()=>{
   return useQuery({
       queryKey:['user'],
       queryFn: async()=>{
-          const response = await axios('http://localhost:3000/auth/getuser',{
+          const response = await axios('http://localhost:3000/api/user/getuser',{
               headers: { Authorization: `Bearer ${token}` },
               withCredentials:true
           })

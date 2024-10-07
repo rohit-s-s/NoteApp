@@ -59,13 +59,10 @@ exports.handleUserSignIn = asyncHandler(async (req, res) => {
       role:user.role
     },
     SECRET_KEY,
-    {
-      expiresIn: "1h",
-    }
+    { expiresIn: "1h" }
   );
   res.cookie("jwt", token, {
     httpOnly: true,
-    maxAge: 24 * 60 * 60 * 1000, // 1 day
   });
   return res
     .status(201)
@@ -127,36 +124,12 @@ exports.handleGetUserById = asyncHandler(async (req, res) => {
   return res.status(200).json(user);
 });
 
-
-//handling refresh tokens
-exports.handleRefreshToken = asyncHandler(async (req, res) => {
-  const token = req.cookies?.jwt;
-  if (!token) return res.status(401).json({ message: "Token not found" });
-
-  jwt.verify(
-    token,
-    SECRET_KEY,
-    asyncHandler(async (err, decoded) => {
-      if (err) return res.status(403).json({ message: "Invalid token" });
-      const user = await User.findById(decoded.id);
-      if (!user) return res.status(401).json({ message: "Unauthorised User" });
-      const newToken = jwt.sign(
-        { id: user._id, username: user.username, role: user.role },
-        SECRET_KEY,
-        { expiresIn: "1h" }
-      );
-      res.json(newToken);
-    })
-  );
-});
-
 //logging out user
 exports.handleUserLogout = asyncHandler(async (req, res) => {
   const cookie = req.cookies;
   if (!cookie?.jwt) return res.status(204).json({ message: "No cookie found" });
   res.clearCookie("jwt", {
     httpOnly: true,
-    maxAge: 24 * 60 * 60 * 1000, // 1 day
   });
   res.status(200).json({ message: "Cookies cleared" });
 });

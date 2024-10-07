@@ -10,7 +10,7 @@ export const useGetNotes = ()=>{
     return useQuery({
         queryKey:['notes'],
         queryFn: async()=>{
-            const response = await axios('http://localhost:3000/notes/getnotes',{
+            const response = await axios('http://localhost:3000/api/notes/getnotes',{
                 headers: { Authorization: `Bearer ${token}` },
                 withCredentials:true
             })
@@ -29,7 +29,7 @@ export const useAddNote = () => {
   return useMutation({
     mutationFn: async (data: { title: string; text: string }) => {
       const response = await axios.post(
-        "http://localhost:3000/notes/create",
+        "http://localhost:3000/api/notes/create",
         data,
         {  headers: { Authorization: `Bearer ${token}` },
             withCredentials: true }
@@ -58,7 +58,7 @@ export const useEditNote = () => {
     mutationFn: async ({ data, id }: Data) => {
         console.log(id)
       const response = await axios.put(
-        "http://localhost:3000/notes/update",
+        "http://localhost:3000/api/notes/update",
         { id, ...data },
         {
           headers: { Authorization: `Bearer ${token}` },
@@ -84,7 +84,7 @@ export const useDeleteNote = () => {
   return useMutation({
     mutationFn: async (data: string) => {
       const response = await axios.delete(
-        "http://localhost:3000/notes/delete",
+        "http://localhost:3000/api/notes/delete",
         {
         headers: { Authorization: `Bearer ${token}` },
           withCredentials: true,
@@ -107,7 +107,7 @@ export const useGetNoteById = (id?:string)=>{
     return useQuery({
         queryKey:['note',id],
         queryFn: async () => {
-            const response = await axios(`http://localhost:3000/notes/getnote/${id}`,{
+            const response = await axios(`http://localhost:3000/api/notes/getnote/${id}`,{
                 headers: { Authorization: `Bearer ${token}` },
                 withCredentials:true
             })
