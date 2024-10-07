@@ -76,7 +76,6 @@ exports.handleUserSignIn = asyncHandler(async (req, res) => {
 //Edit user details; authorised to users
 exports.handleUserEdit = asyncHandler(async (req, res) => {
   const { username,password } = req.body;
-
   if (!username || !password) {
     return res.status(400).json({
       message: "Provide required feilds",
@@ -85,7 +84,7 @@ exports.handleUserEdit = asyncHandler(async (req, res) => {
 
   //to check for duplicate values entered for username
   const existingUser = await User.findOne({ username });
-  if (existingUser && existingUser._id.toString() !== id) {
+  if (existingUser && existingUser._id.toString() !== req.user._id) {
     return res.status(400).json({ message: "Username already exists" });
   }
 

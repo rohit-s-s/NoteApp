@@ -43,6 +43,7 @@ const Input = ({label,type,name}:{label:string,type:'text'|'textarea'|'password'
               </>
             
             ):(
+              <>
               <input
             className="outline-none px-2 py-1 rounded-md border border-gray-500 w-60"
             type={type}
@@ -52,8 +53,15 @@ const Input = ({label,type,name}:{label:string,type:'text'|'textarea'|'password'
                 value:true,
                 message:`${name} cannot be empty`
               },
+              validate: (value: string) => {
+                if (typeof value === "string" && value.trim() === "") {
+                  return `${name} cannot be empty`;
+                }
+              },
             })}
             />
+            <div className="text-sm text-red-700"><ErrorMessage errors={errors} name={name} /></div>
+          </>
             )
           )
          }

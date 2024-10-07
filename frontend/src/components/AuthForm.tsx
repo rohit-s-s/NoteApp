@@ -46,7 +46,7 @@ const method = useForm<FormValues>({
         <form onSubmit={handleSubmit(onSubmit)} className="block" noValidate>
           <Input label="Enter username" type="text" name="username"/>
           <Input label="Enter password" type="password" name="password"/>
-          <div className='text-sm text-red-700 before:content-["⚠ "]'>
+          <div className='text-sm text-red-700' >
             <ErrorMessage errors={errors} name="root" />
           </div>
           <SubmitButton logic={logic}/>
