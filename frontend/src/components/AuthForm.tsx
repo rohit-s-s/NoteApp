@@ -9,12 +9,13 @@ import { userData } from "../types/util";
 type FormValues = {
   username: string;
   password: string;
+  id?:string,
   root?: string;
 };
 
 type FormType ={
   logic:string,
-  userData?:{_id:string,username:string,password:string}
+  userData?:userData
   // eslint-disable-next-line @typescript-eslint/no-explicit-any
   mutate: UseMutateFunction<any,Error, userData,unknown>,
     error:Error|null,

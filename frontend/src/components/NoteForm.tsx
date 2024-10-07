@@ -35,7 +35,6 @@ const NoteForm = ({logic,noteData}:{logic:string,noteData?:{title:string,text:st
                 <SubmitButton logic={logic}/>
               </form>
             </FormProvider>
-             {/* {isError && <div className="text-red-700">{error.message}</div>} */}
           </>
           );
 }
