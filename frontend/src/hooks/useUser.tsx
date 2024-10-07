@@ -1,7 +1,7 @@
 import { useMutation,useQuery,useQueryClient } from "@tanstack/react-query";
 import axios from "axios";
 import useAuth from "./useAuth";
-import { useLocation, useNavigate } from "react-router-dom";
+import { useNavigate } from "react-router-dom";
 
 //Hook for updating user data
 export const useUpdate = () => {
@@ -30,8 +30,7 @@ export const useUpdate = () => {
 
 //hook for deleting user data
 export const useDeleteUser = () => {
-  const { auth } = useAuth();
-  const {setAuth} = useAuth()
+  const { auth,setAuth } = useAuth();
   const token = auth.token;
   const queryClinet = useQueryClient();
   return useMutation({
@@ -71,8 +70,6 @@ export const useRegister = ()=>{
 export const useLogin = ()=>{
   const { setAuth } = useAuth();
   const navigate = useNavigate();
-  const location = useLocation();
-  const from = location.state?.from?.pathname || "/";
   return useMutation({
     mutationFn: async (data:{username:string,password:string}) => {
       const response = await axios.post(
@@ -84,7 +81,7 @@ export const useLogin = ()=>{
     },
     onSuccess: (data) => {
       setAuth((prev) => ({ ...prev, ...data }));
-      navigate(from, { replace: true });
+      navigate('/');
     },
   });
 }

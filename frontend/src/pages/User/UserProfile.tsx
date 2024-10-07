@@ -1,7 +1,7 @@
 import { Link } from "react-router-dom"
-import { useDeleteUser } from "../../hooks/useUser"
 import { useQueryClient } from "@tanstack/react-query"
 import { userData } from "../../types/util"
+import { useDeleteUser } from "../../hooks/useUser"
 
 
 const UserProfile = () => {
