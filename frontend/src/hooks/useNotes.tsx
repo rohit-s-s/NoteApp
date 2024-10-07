@@ -14,7 +14,6 @@ export const useGetNotes = ()=>{
                 headers: { Authorization: `Bearer ${token}` },
                 withCredentials:true
             })
-            console.log(response.data)
             return response.data
         },
         refetchOnWindowFocus:false
@@ -35,7 +34,6 @@ export const useAddNote = () => {
         {  headers: { Authorization: `Bearer ${token}` },
             withCredentials: true }
       );
-      console.log(response.data);
       return response.data;
     },
     onSuccess:()=>{
@@ -67,7 +65,6 @@ export const useEditNote = () => {
           withCredentials: true,
         }
       );
-      console.log(response.data);
       return response.data;
     },
     onSuccess:()=>{
@@ -94,7 +91,6 @@ export const useDeleteNote = () => {
           data: { id: data },
         }
       );
-      console.log(response.data);
       return response.data;
     },
     onSuccess:()=>{
@@ -115,7 +111,6 @@ export const useGetNoteById = (id?:string)=>{
                 headers: { Authorization: `Bearer ${token}` },
                 withCredentials:true
             })
-            console.log(response.data)
             return response.data
             
         },

@@ -1,40 +1,40 @@
 import { FormProvider, SubmitHandler, useForm } from "react-hook-form";
 import Input from "./Input";
-import { useLogin, useRegister, useUpdate } from "../hooks/useUser";
 import SubmitButton from "./SubmitButton";
 import { useEffect } from "react";
+import { ErrorMessage } from '@hookform/error-message';
+import { UseMutateFunction } from "@tanstack/react-query";
+import { userData } from "../types/util";
 
 type FormValues = {
   username: string;
   password: string;
+  root?: string;
 };
 
-const AuthForm = ({logic,userData}:{logic:string,userData?:{_id:string,username:string,password:string}}) => {
+type FormType ={
+  logic:string,
+  userData?:{_id:string,username:string,password:string}
+  // eslint-disable-next-line @typescript-eslint/no-explicit-any
+  mutate: UseMutateFunction<any,Error, userData,unknown>,
+    error:Error|null,
+    isError:boolean
+}
 
-  const {mutate:Login,isError,error} = useLogin()
-  const {mutate:Register} = useRegister()
-  const {mutate:Update} = useUpdate()
+const AuthForm = ({logic,userData,mutate,error,isError}:FormType) => {
   
 const method = useForm<FormValues>({
   defaultValues:{
     username:userData?.username
   }
 });
-  const {handleSubmit,setError} = method;
-  const onSubmit: SubmitHandler<FormValues> = (data) => {
-    if(logic==='Register'){
-       Register(data)
-    }else if(logic==='Edit'){
-      Update({data:data,id:userData?._id as string})
-    }
-    else{
-        Login(data)
-    }
-  }
+  const {handleSubmit,formState:{errors} ,setError} = method;
+  const onSubmit: SubmitHandler<FormValues> = (data) => mutate(data)
 
-  const formError = { type: 'server', message: error?.message };
+  
   useEffect(() => {
     if (isError) {
+      const formError = { type: 'server', message: error?.message };
       setError('root', formError); // Set the error only when `isError` becomes true
     }
   }, [isError, error, setError]); // Dependency array
@@ -46,10 +46,12 @@ const method = useForm<FormValues>({
         <form onSubmit={handleSubmit(onSubmit)} className="block" noValidate>
           <Input label="Enter username" type="text" name="username"/>
           <Input label="Enter password" type="password" name="password"/>
+          <div className='text-sm text-red-700 before:content-["⚠ "]'>
+            <ErrorMessage errors={errors} name="root" />
+          </div>
           <SubmitButton logic={logic}/>
         </form>
       </FormProvider>
-        {/* <p style={{ color: "red" }}>{error && error.message}</p> */}
     </>
   )
 }

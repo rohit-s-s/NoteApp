@@ -2,6 +2,7 @@ import { useMutation,useQuery,useQueryClient } from "@tanstack/react-query";
 import axios from "axios";
 import useAuth from "./useAuth";
 import { useNavigate } from "react-router-dom";
+import { userData } from "../types/util";
 
 //Hook for updating user data
 export const useUpdate = () => {
@@ -10,10 +11,10 @@ export const useUpdate = () => {
   const token = auth.token;
   const queryClinet = useQueryClient();
   return useMutation({
-    mutationFn: async ({data, id}: { data:{username:string,password?:string },id:string}) => {
+    mutationFn: async (data:userData) => {
       const response = await axios.put(
         "http://localhost:3000/auth/edit",
-        {...data,id},
+        {...data},
         {
           headers: { Authorization: `Bearer ${token}` },
           withCredentials: true,
@@ -40,7 +41,6 @@ export const useDeleteUser = () => {
         headers: { Authorization: `Bearer ${token}` },
         withCredentials: true,
       });
-      console.log(response.data)
       return response.data;
     },
     onSuccess: () => {
@@ -55,11 +55,10 @@ export const useDeleteUser = () => {
 export const useRegister = ()=>{
   const navigate = useNavigate()
   return useMutation({
-    mutationFn: async (data:{username:string,password:string}) => {
+    mutationFn: async (data:userData) => {
       await axios.post('http://localhost:3000/auth/register', data)
     },
-    onSuccess:(data)=>{
-      console.log(data)
+    onSuccess:()=>{
       alert("User registered")
       navigate('/login')
     }
@@ -71,12 +70,11 @@ export const useLogin = ()=>{
   const { setAuth } = useAuth();
   const navigate = useNavigate();
   return useMutation({
-    mutationFn: async (data:{username:string,password:string}) => {
+    mutationFn: async (data:userData) => {
       const response = await axios.post(
         "http://localhost:3000/auth/login",
         data,{withCredentials:true}
       );
-      console.log(response.data);
       return response.data;
     },
     onSuccess: (data) => {
@@ -115,7 +113,6 @@ export const useGetUser = ()=>{
               headers: { Authorization: `Bearer ${token}` },
               withCredentials:true
           })
-          console.log(response.data)
           return response.data
       },
       refetchOnWindowFocus:false

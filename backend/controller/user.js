@@ -75,9 +75,9 @@ exports.handleUserSignIn = asyncHandler(async (req, res) => {
 
 //Edit user details; authorised to users
 exports.handleUserEdit = asyncHandler(async (req, res) => {
-  const { id,username,password } = req.body;
+  const { username,password } = req.body;
 
-  if (!username || !password|| !id) {
+  if (!username || !password) {
     return res.status(400).json({
       message: "Provide required feilds",
     });
@@ -95,7 +95,7 @@ exports.handleUserEdit = asyncHandler(async (req, res) => {
       .status(400)
       .json({ message: "Password should not be less than 6 characters" });
 
-    const user = await User.findById(id);
+    const user = await User.findById(req.user._id);
     user.username = username;
     user.password = await bcrypt.hash(password, 10);
 

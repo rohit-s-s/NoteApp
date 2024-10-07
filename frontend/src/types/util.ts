@@ -10,6 +10,5 @@ export type AuthContextType = {
 export type userData = {
     username:string,
     password:string,
-    _id:string
-
+    _id?:string
 }
